@@ -1,0 +1,31 @@
+{
+  "name": "flux-lsp-cli",
+  "version": "1.0.0",
+  "description": "Flux cli LSP server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "flux",
+    "lsp",
+    "cli"
+  ],
+  "author": "Brandon Farmer <bthesorceror@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@influxdata/flux-lsp-node": "^0.1.0",
+    "yargs": "^15.0.2"
+  },
+  "bin": {
+    "flux-lsp": "./src/bin.js"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
+}
