@@ -2,10 +2,16 @@
   "name": "@influxdata/flux-lsp-cli",
   "version": "0.2.0",
   "description": "Flux cli LSP server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/influxdata/flux-lsp-cli"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "bundle": "rollup --config rollup.config.js",
+    "prepublish": "npm run bundle"
   },
   "keywords": [
     "flux",
@@ -16,17 +22,21 @@
   "license": "MIT",
   "dependencies": {
     "@influxdata/flux-lsp-node": "^0.1.0",
+    "rollup": "^1.27.8",
     "yargs": "^15.0.2"
   },
   "bin": {
     "flux-lsp": "./src/bin.js"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^6.0.0",
     "eslint": "^6.7.2",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-preserve-shebangs": "^0.1.2"
   }
 }
