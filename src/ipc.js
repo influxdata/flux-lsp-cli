@@ -37,9 +37,14 @@ process.on('message', (data) => {
 
   const resp = server.process(input)
   const msg = resp.get_message()
+  const err = resp.get_error()
 
   if (msg) {
     log(`RESPONSE: ${msg}`)
     process.send(msg)
+  }
+
+  if (err) {
+    log(`Err: ${err}`)
   }
 })
