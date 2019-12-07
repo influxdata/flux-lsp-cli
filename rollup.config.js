@@ -13,12 +13,14 @@ module.exports = {
     resolve({
       preferBuiltins: true
     }),
-    commonjs()
+    commonjs({
+      ignore: ['./flux-lsp-node.js']
+    })
   ],
   external: ['fs', 'util', 'path'],
-  onwarn (warning, rollupWarn) {
+  onwarn (warning, warn) {
     if (warning.code !== 'CIRCULAR_DEPENDENCY') {
-      rollupWarn(warning)
+      warn(warning)
     }
   }
 }
