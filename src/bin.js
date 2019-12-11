@@ -29,29 +29,26 @@ if (logfile && logfile !== '') {
   const stream = fs.createWriteStream(logfile, { encoding: 'utf8' })
 
   log = (msg) => {
-    stream.write(msg)
+    stream.write(msg.toString())
   }
 }
 
 const server = new Server(argv['disable-folding'])
 
 const respond = (data) => {
-  if (argv.ipc) {
-    const lines = data.split('\n')
-    if (lines.length === 3) {
-      process.send(JSON.parse(lines[2]))
-    }
-  } else {
-    process.stdout.write(data)
+  process.stdout.write(data)
+}
+
+const respondIPC = (data) => {
+  const lines = data.split('\n')
+
+  if (lines.length === 3) {
+    process.send(JSON.parse(lines[2]))
   }
 }
 
 const handleInput = (data) => {
-  let input = data
-
-  if (argv.ipc) {
-    input = `\n\n${JSON.stringify(input)}`
-  }
+  const input = data.toString()
 
   log(`REQUEST: ${input}\n`)
 
@@ -69,8 +66,24 @@ const handleInput = (data) => {
   }
 }
 
+const handleIPC = (data) => {
+  const input = `\n\n${JSON.stringify(data)}`
+  const resp = server.process(input)
+
+  const msg = resp.get_message()
+  if (msg) {
+    log(`RESPONSE: ${msg}\n`)
+    respondIPC(msg)
+  }
+
+  const err = resp.get_error()
+  if (err) {
+    log(`ERROR: ${err}\n`)
+  }
+}
+
 if (argv.ipc) {
-  process.on('message', handleInput)
+  process.on('message', handleIPC)
 } else {
   process.stdin.on('data', handleInput)
 }
