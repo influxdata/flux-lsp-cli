@@ -68,6 +68,7 @@ const handleInput = (data) => {
 
 const handleIPC = (data) => {
   const input = `\n\n${JSON.stringify(data)}`
+  log(`REQUEST: ${input}\n`)
   const resp = server.process(input)
 
   const msg = resp.get_message()
