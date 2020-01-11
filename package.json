@@ -1,6 +1,6 @@
 {
   "name": "@influxdata/flux-lsp-cli",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "Flux cli LSP server",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "author": "Brandon Farmer <bthesorceror@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@influxdata/flux-lsp-node": "^0.1.0",
+    "@influxdata/flux-lsp-node": "^0.2.0",
     "yargs": "^15.0.2"
   },
   "bin": {
