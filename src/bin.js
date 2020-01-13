@@ -33,7 +33,7 @@ if (logfile && logfile !== '') {
   }
 }
 
-const server = new Server(argv['disable-folding'])
+let server = new Server(argv['disable-folding'])
 
 const respond = (data) => {
   process.stdout.write(data)
@@ -67,19 +67,25 @@ const handleInput = (data) => {
 }
 
 const handleIPC = (data) => {
-  const input = `\n\n${JSON.stringify(data)}`
-  log(`REQUEST: ${input}\n`)
-  const resp = server.process(input)
+  try {
+    const input = `\n\n${JSON.stringify(data)}`
+    log(`REQUEST: ${input}\n`)
+    const resp = server.process(input)
 
-  const msg = resp.get_message()
-  if (msg) {
-    log(`RESPONSE: ${msg}\n`)
-    respondIPC(msg)
-  }
+    const msg = resp.get_message()
+    if (msg) {
+      log(`RESPONSE: ${msg}\n`)
+      respondIPC(msg)
+    }
 
-  const err = resp.get_error()
-  if (err) {
-    log(`ERROR: ${err}\n`)
+    const err = resp.get_error()
+    if (err) {
+      log(`ERROR: ${err}\n`)
+    }
+  } catch (ex) {
+    log('Caught unknown error')
+    server = new Server(argv['disable-folding'])
+    respondIPC('')
   }
 }
 
