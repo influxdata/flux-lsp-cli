@@ -3,7 +3,7 @@ const resolve = require('@rollup/plugin-node-resolve')
 const commonjs = require('rollup-plugin-commonjs')
 
 module.exports = {
-  input: 'src/bin.js',
+  input: 'src/cli.js',
   output: {
     file: 'out/bundle.js',
     format: 'cjs'
