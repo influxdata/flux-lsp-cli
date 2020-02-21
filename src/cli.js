@@ -48,8 +48,4 @@ export default class CLI extends EventEmitter {
   registerBucketsCallback (f) {
     this.server.register_buckets_callback(f)
   }
-
-  respond (data) {
-    process.stdout.write(data)
-  }
 }
