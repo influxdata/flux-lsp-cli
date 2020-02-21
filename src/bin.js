@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 const fs = require('fs')
-const { Server } = require('@influxdata/flux-lsp-node')
+
 const yargs = require('yargs')
+const CLI = require('./cli')
 
 const argv = yargs
   .option('disable-folding', {
@@ -15,82 +16,18 @@ const argv = yargs
     type: 'string',
     describe: 'debug log file path'
   })
-  .option('ipc', {
-    type: 'boolean',
-    describe: 'use ipc for transport',
-    default: false
-  })
   .argv
 
-let log = () => { }
+const cli = CLI.new(argv)
 
-const logfile = argv['log-file']
-if (logfile && logfile !== '') {
-  const stream = fs.createWriteStream(logfile, { encoding: 'utf8' })
+if (argv['log-file'] && argv['log-file'] !== '') {
+  const stream = fs.createWriteStream(argv['log-file'], { encoding: 'utf8' })
 
-  log = (msg) => {
-    stream.write(msg.toString())
-  }
+  cli.on('log', (msg) => {
+    stream.write(msg)
+  })
 }
 
-let server = new Server(argv['disable-folding'])
-
-const respond = (data) => {
-  process.stdout.write(data)
-}
-
-const respondIPC = (data) => {
-  const lines = data.split('\n')
-
-  if (lines.length === 3) {
-    process.send(JSON.parse(lines[2]))
-  }
-}
-
-const handleInput = (data) => {
-  const input = data.toString()
-
-  log(`REQUEST: ${input}\n`)
-
-  const resp = server.process(input)
-
-  const msg = resp.get_message()
-  if (msg) {
-    log(`RESPONSE: ${msg}\n`)
-    respond(msg)
-  }
-
-  const err = resp.get_error()
-  if (err) {
-    log(`ERROR: ${err}\n`)
-  }
-}
-
-const handleIPC = (data) => {
-  try {
-    const input = `\n\n${JSON.stringify(data)}`
-    log(`REQUEST: ${input}\n`)
-    const resp = server.process(input)
-
-    const msg = resp.get_message()
-    if (msg) {
-      log(`RESPONSE: ${msg}\n`)
-      respondIPC(msg)
-    }
-
-    const err = resp.get_error()
-    if (err) {
-      log(`ERROR: ${err}\n`)
-    }
-  } catch (ex) {
-    log('Caught unknown error')
-    server = new Server(argv['disable-folding'])
-    respondIPC('')
-  }
-}
-
-if (argv.ipc) {
-  process.on('message', handleIPC)
-} else {
-  process.stdin.on('data', handleInput)
-}
+process.stdin
+  .pipe(cli.createStream())
+  .pipe(process.stdout)
