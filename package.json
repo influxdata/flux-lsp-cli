@@ -1,12 +1,12 @@
 {
   "name": "@influxdata/flux-lsp-cli",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Flux cli LSP server",
   "repository": {
     "type": "git",
     "url": "https://github.com/influxdata/flux-lsp-cli"
   },
-  "main": "index.js",
+  "main": "src/cli.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
