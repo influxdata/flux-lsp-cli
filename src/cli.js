@@ -1,6 +1,6 @@
 const { EventEmitter } = require('events')
 
-const through2 = require('through2')
+const through = require('through2')
 const { Server } = require('@influxdata/flux-lsp-node')
 
 export default class CLI extends EventEmitter {

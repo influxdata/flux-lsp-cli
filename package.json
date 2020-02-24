@@ -1,6 +1,6 @@
 {
   "name": "@influxdata/flux-lsp-cli",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Flux cli LSP server",
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@influxdata/flux-lsp-node": "^0.3.0",
+    "through2": "^3.0.1",
     "yargs": "^15.0.2"
   },
   "bin": {
