@@ -21,7 +21,7 @@ export default class CLI extends EventEmitter {
 
   createStream () {
     const instance = this
-    return through2(function (data, _enc, cb) {
+    return through(function (data, _enc, cb) {
       const input = data.toString()
 
       instance.log(`REQUEST: ${input}\n`)
