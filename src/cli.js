@@ -3,7 +3,7 @@ const { EventEmitter } = require('events')
 const through = require('through2')
 const { Server } = require('@influxdata/flux-lsp-node')
 
-export default class CLI extends EventEmitter {
+class CLI extends EventEmitter {
   constructor (args) {
     super()
 
@@ -12,7 +12,7 @@ export default class CLI extends EventEmitter {
   }
 
   static new (args) {
-    return CLI(args)
+    return new CLI(args)
   }
 
   log (msg) {
@@ -49,3 +49,5 @@ export default class CLI extends EventEmitter {
     this.server.register_buckets_callback(f)
   }
 }
+
+module.exports = CLI
