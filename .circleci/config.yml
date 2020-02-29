@@ -12,6 +12,9 @@ jobs:
     - run:
         name: "run lint"
         command: npm run lint
+    - run:
+        name: "run tests"
+        command: npm test
 
 workflows:
   version: 2.1
