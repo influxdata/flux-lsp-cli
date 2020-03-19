@@ -8,7 +8,7 @@ class CLI extends EventEmitter {
     super()
 
     this.args = args
-    this.server = new Server(this.args['disable-folding'])
+    this.server = new Server(this.args['disable-folding'], false)
   }
 
   static new (args) {
