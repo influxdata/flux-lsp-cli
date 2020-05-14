@@ -2,6 +2,7 @@ const { EventEmitter } = require('events')
 
 const through = require('through2')
 const { Server } = require('@influxdata/flux-lsp-node')
+const Client = require('./client')
 
 class CLI extends EventEmitter {
   constructor (args) {
@@ -9,6 +10,17 @@ class CLI extends EventEmitter {
 
     this.args = args
     this.server = new Server(this.args['disable-folding'], false)
+    this.client = new Client(args.url, args.token, args.org)
+
+    this.client.on('log', (msg) => this.log(msg))
+
+    this.getBuckets = this.getBuckets.bind(this)
+    this.getMeasurements = this.getMeasurements.bind(this)
+    this.getTagKeys = this.getTagKeys.bind(this)
+
+    this.server.register_measurements_callback(this.getMeasurements)
+    this.server.register_buckets_callback(this.getBuckets)
+    this.server.register_tag_keys_callback(this.getTagKeys)
   }
 
   static new (args) {
@@ -16,7 +28,19 @@ class CLI extends EventEmitter {
   }
 
   log (msg) {
-    this.emit('log', msg.toString())
+    this.emit('log', `\n${msg.toString()}\n`)
+  }
+
+  async getBuckets () {
+    return await this.client.getBuckets()
+  }
+
+  async getMeasurements (bucket) {
+    return await this.client.getMeasurements(bucket)
+  }
+
+  async getTagKeys (bucket) {
+    return await this.client.getTagKeys(bucket)
   }
 
   createStream () {
@@ -43,10 +67,6 @@ class CLI extends EventEmitter {
         instance.log('Unknown error has occured')
       })
     })
-  }
-
-  registerBucketsCallback (f) {
-    this.server.register_buckets_callback(f)
   }
 }
 

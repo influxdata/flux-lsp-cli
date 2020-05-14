@@ -16,6 +16,21 @@ const argv = yargs
     type: 'string',
     describe: 'debug log file path'
   })
+  .option('url', {
+    alias: 'u',
+    type: 'string',
+    describe: 'base url for influxdb instance'
+  })
+  .option('token', {
+    alias: 't',
+    type: 'string',
+    describe: 'token for influxdb instance'
+  })
+  .option('org', {
+    alias: 'o',
+    type: 'string',
+    describe: 'org for influxdb instance'
+  })
   .argv
 
 const cli = CLI.new(argv)
