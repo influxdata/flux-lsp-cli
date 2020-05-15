@@ -45,12 +45,24 @@ class CLI extends EventEmitter {
 
   createStream () {
     const instance = this
+    let cache = ''
     return through(function (data, _enc, cb) {
       const input = data.toString()
 
-      instance.log(`REQUEST: ${input}\n`)
+      instance.log(`Input: ${input}\n`)
 
-      instance.server.process(input).then((resp) => {
+      cache += input
+
+      instance.log(`CACHE: ${cache.split('\n').length} ${JSON.stringify(cache)}`)
+
+      if (cache.split('\n').length < 3 || cache.split('\r\n')[2] === '') {
+        return cb()
+      }
+
+      instance.log(`REQUEST: ${cache}\n`)
+
+      instance.server.process(cache).then((resp) => {
+        cache = ''
         const msg = resp.get_message()
         if (msg) {
           instance.log(`RESPONSE: ${msg}\n`)
@@ -61,10 +73,10 @@ class CLI extends EventEmitter {
         if (err) {
           instance.log(`ERROR: ${err}\n`)
         }
-
-        cb()
       }).catch(() => {
         instance.log('Unknown error has occured')
+      }).finally(() => {
+        cb()
       })
     })
   }
