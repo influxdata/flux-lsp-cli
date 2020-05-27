@@ -41,6 +41,20 @@ class Client extends EventEmitter {
     return this.parse(response)
   }
 
+  async getTagValues (bucket, tag) {
+    const query = `
+      import "influxdata/influxdb/v1"
+      v1.tagValues(bucket: "${bucket}", tag: "${tag}")
+    `
+
+    const response = await this.runQuery(query)
+    if (!response) {
+      return []
+    }
+
+    return this.parse(response)
+  }
+
   async runQuery (query) {
     if (!this.url || !this.token || !this.org) {
       this.emit('log', 'no database configured')

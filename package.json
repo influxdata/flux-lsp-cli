@@ -19,7 +19,7 @@
   "author": "Brandon Farmer <bthesorceror@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@influxdata/flux-lsp-node": "0.5.7",
+    "@influxdata/flux-lsp-node": "0.5.11",
     "axios": "^0.19.2",
     "through2": "^3.0.1",
     "yargs": "^15.3.1"

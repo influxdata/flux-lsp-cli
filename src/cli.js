@@ -17,10 +17,12 @@ class CLI extends EventEmitter {
     this.getBuckets = this.getBuckets.bind(this)
     this.getMeasurements = this.getMeasurements.bind(this)
     this.getTagKeys = this.getTagKeys.bind(this)
+    this.getTagValues = this.getTagValues.bind(this)
 
     this.server.register_measurements_callback(this.getMeasurements)
     this.server.register_buckets_callback(this.getBuckets)
     this.server.register_tag_keys_callback(this.getTagKeys)
+    this.server.register_tag_values_callback(this.getTagValues)
   }
 
   static new (args) {
@@ -41,6 +43,10 @@ class CLI extends EventEmitter {
 
   async getTagKeys (bucket) {
     return await this.client.getTagKeys(bucket)
+  }
+
+  async getTagValues (bucket, tag) {
+    return await this.client.getTagValues(bucket, tag)
   }
 
   createStream () {
