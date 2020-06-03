@@ -16,8 +16,26 @@ jobs:
         name: "run tests"
         command: npm test
 
+  deploy:
+    docker:
+      - image: circleci/node:12.13.1
+    steps:
+      - checkout
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      - run: npm install
+      - run: npm publish
+
 workflows:
   version: 2.1
   test:
     jobs:
       - test
+
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/

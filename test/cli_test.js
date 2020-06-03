@@ -12,7 +12,7 @@ describe('CLI', () => {
     const cli = new CLI({})
 
     cli.once('log', (msg) => {
-      expect(msg).toEqual('hello')
+      expect(msg).toEqual('\nhello\n')
       done()
     })
 
