@@ -11,6 +11,7 @@ An implementation of the [Language Server Protocol](https://microsoft.github.io/
 npm i -g @influxdata/flux-lsp-cli
 ```
 
+
 # Core functionality
 
 The core of the flux parsing library can be found [here](https://github.com/influxdata/flux-lsp) which is compiled into WASM for consumption in this tool.
