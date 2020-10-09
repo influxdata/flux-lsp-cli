@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 current_branch=$(git branch --show-current)
 git_changes=$(git status -s | wc -l)
 if [[ $git_changes != 0 ]]; then
@@ -49,4 +47,4 @@ git tag -a $new_version HEAD -m "Release $new_verion"
 git push origin master --follow-tags
 
 # Requires the hub CLI tool to be installed
-hub release create $new_version -m "Release $new_version" 
+hub release create $new_version -m "Release $new_version" -e
