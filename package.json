@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "@influxdata/flux-lsp-node": "^0.5.27",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "through2": "^3.0.1",
     "yargs": "^15.3.1"
   },
