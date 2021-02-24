@@ -53,4 +53,6 @@ git push -u origin $branch_name
 
 hub pull-request -o \
 	-m "build: Release $new_version" \
-	-m "Change version from $version to $new_version" &> /dev/null &
+	-m "- Change version from $version to $new_version
+- Import latest version of flux-lsp-node
+" &> /dev/null &
