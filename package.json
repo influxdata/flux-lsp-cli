@@ -1,6 +1,6 @@
 {
   "name": "@influxdata/flux-lsp-cli",
-  "version": "0.7.16",
+  "version": "0.7.17",
   "description": "Flux cli LSP server",
   "repository": {
     "type": "git",
