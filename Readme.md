@@ -1,3 +1,5 @@
+This repository has been archived see [flux-lsp](https://github.com/influxdata/flux-lsp) for the current implementation of the Flux LSP as a stand alone binary.
+
 # Flux LSP
 
 [![LICENSE](https://img.shields.io/github/license/influxdata/flux-lsp.svg)](https://github.com/influxdata/flux-lsp/blob/master/LICENSE)
